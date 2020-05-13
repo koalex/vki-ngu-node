@@ -1,15 +1,22 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <title>NODE.js</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+    </style>
 </head>
+
 <body>
     <form action="/api/contacts" method="POST" enctype="application/x-www-form-urlencoded">
-        <input type="text" name="user" placeholder="ИМЯ ПОЛЬЗОВАТЕЛЯ">
+        <input type="text" name="name" placeholder="ИМЯ ПОЛЬЗОВАТЕЛЯ" id="username">
         <br>
-        <input type="text" name="phone" placeholder="НОМЕР ТЕЛЕФОНА">
-        <button type="submit">СОЗДАТЬ</button>
+        <input type="text" name="phone" placeholder="НОМЕР ТЕЛЕФОНА" id="userphone">
+        <button type="submit" id="create_user">СОЗДАТЬ</button>
     </form>
 
     <hr>
@@ -20,5 +27,15 @@
         <input type="file" name="foto">
         <button type="submit">ЗАГРУЗИТЬ ФОТО</button>
     </form>
+
+    <hr>
+    <h2>Контакты:</h2>
+    <div class="contacts">
+
+    </div>
+
+
+    <script src="index.js"></script>
 </body>
+
 </html>
