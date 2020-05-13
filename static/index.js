@@ -9,7 +9,7 @@ create_btn.addEventListener('submit', (e) => {
     e.preventDefault();
     fetch(createURL, {
       method: 'POST',
-      body: `?user=${userphone.value}&phone=${userphone.value}`
+      body: `?user=${username.value}&phone=${userphone.value}`
     })
       .then(result => {
         console.log(result);
