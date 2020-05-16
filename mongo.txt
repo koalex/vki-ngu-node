@@ -1,0 +1,55 @@
+noSQL
+SQL - таблица
+noSQL - коллекция
+
+вместо строк - документы
+вместо колонок - поля документов
+
+/data/db - путь до хранения файлов БД по умолчанию
+27017 - порт сервера БД по умолчанию
+
+
+CRUD
+
+C - create
+insertOne
+insertMany
+db.users.insertOne({firstname: 'Вася', lastname: 'Иванов', age: 30});
+db.users.insertMany([{firstname: 'Петя', lastname: 'Сидоров', age: 20}, {firstname: 'Гена', lastname: 'Крокодилов', age: 40}]);
+
+R - read
+find
+finOne
+Условные операторы:
+$ne - не равно db.users.find({age: {$ne: 30}});
+$gt -больше 30 db.users.find({age: {$gt: 30}});
+$gte -больше 30 включительно db.users.find({age: {$gte: 30}});
+$lt - меньше 30 db.users.find({age: {$lt: 30}});
+$lte - меньше 30 включительно db.users.find({age: {$lte: 30}});
+$in - 20 и 40 db.users.find({age: {$in: [20, 40]}});
+$nin - НЕ 20 и НЕ 40 db.users.find({age: {$nin: [20, 40]}});
+
+Логические операторы:
+$or ИЛИ - db.users.find({$or: [{firstname: 'Вася'}, {firstname: 'Петя'}]})
+$and И - db.users.find({$and: [{firstname: 'Вася'}, {age: {$gte: 30}}]})
+
+U - update
+db.users.update({age: 31}, {firstname: 'Вася', lastname: 'Иванов', age: 31}, {multi: true});
+db.users.update({age: 33}, {firstname: 'Боря', lastname: 'Борисов', age: 33}, {upsert: true});
+db.users.update({age: 33}, {$set: {firstname: 'Володя'}});
+db.users.update({age: 33}, {$inc: {age: 2}});
+
+D - delete
+db.users.remove({age: 35});
+
+
+// Создание параметризованных коллекций
+db.createCollection('admins', {
+ max: 2,
+ size: 1000, // Макс размер в байтах
+ capped: true, // перезапись старых документов
+});
+
+
+// ORM - sequlize
+// ODM - mongoose

@@ -4,12 +4,32 @@
     <meta charset="UTF-8">
     <title>NODE.js</title>
 </head>
+
 <body>
-    <form action="/api/contacts" method="POST" enctype="application/x-www-form-urlencoded">
-        <input type="text" name="user" placeholder="ИМЯ ПОЛЬЗОВАТЕЛЯ">
+    <form action="/api/signup" method="POST" enctype="application/x-www-form-urlencoded">
+        <input type="text" name="first_name" placeholder="ИМЯ ПОЛЬЗОВАТЕЛЯ">
         <br>
-        <input type="text" name="phone" placeholder="НОМЕР ТЕЛЕФОНА">
-        <button type="submit">СОЗДАТЬ</button>
+        <input type="text" name="last_name" placeholder="ФАМИЛИЯ ПОЛЬЗОВАТЕЛЯ">
+        <br>
+        <input type="text" name="age" placeholder="ВОЗРАСТ">
+        <br>
+        <input type="text" name="email" placeholder="EMAIL">
+        <br>
+        <input type="password" name="password" placeholder="ПАРОЛЬ">
+        <br>
+        <input type="password" name="passwordConfirmation" placeholder="ПОВТОРИТЕ ПАРОЛЬ">
+        <br>
+        <button type="submit">SIGNUP</button>
+    </form>
+
+    <hr>
+
+    <form action="/api/signin" method="POST" enctype="application/x-www-form-urlencoded">
+        <input type="text" name="email" placeholder="EMAIL">
+        <br>
+        <input type="password" name="password" placeholder="ПАРОЛЬ">
+        <br>
+        <button type="submit">SIGNIN</button>
     </form>
 
     <hr>
