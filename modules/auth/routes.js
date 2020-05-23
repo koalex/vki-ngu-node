@@ -1,19 +1,13 @@
 const Router = require('koa-router');
-const bodyParser = require('./middlewares/bodyParser');
+const bodyParser = require('../../middlewares/bodyParser');
 // const busboy = require('./middlewares/busboy');
-const User = require('./models/user');
+const User = require('../users/models/user');
 const passport = require('./middlewares/passport');
 const tokensCtrl = require('./controllers/tokens');
 
-const publicRouter = new Router();
 const apiRouter = new Router({
 	prefix: '/api'
 });
-
-publicRouter
-	.get('/contacts', async ctx => {
-		ctx.body = 'СТРАНИЦА КОНТАКТЫ';
-	});
 
 apiRouter
 	.post('/signup', bodyParser, async ctx => {
@@ -27,11 +21,17 @@ apiRouter
 		await tokensCtrl.setTokensCookies(ctx, tokens);
 		ctx.body = ctx.state.user;
 	})
+	.post('/signout', bodyParser, passport.authenticate('jwt', {session: false}), async ctx => {
+		// TODO: сделать деавторизацию
+	})
+	.get('/check-jwt-auth', bodyParser, passport.authenticate('jwt', {session: false}), async ctx => {
+		ctx.body = 'ДОСТУП РАЗРЕШЁН';
+	})
+	.get('/refresh-tokens', async ctx => {
+		await tokensCtrl.refreshTokens(ctx);
+	})
 	.get('/users', async ctx => {
 		ctx.body = await User.find();
 	});
 
-module.exports = app => {
-	app.use(publicRouter.routes());
-	app.use(apiRouter.routes());
-};
+module.exports = [apiRouter];
