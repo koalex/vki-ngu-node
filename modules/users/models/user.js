@@ -1,4 +1,4 @@
-const mongoose = require('../lib/mongoose');
+const mongoose = require('../../../lib/mongoose');
 const crypto = require('crypto');
 
 const emailValidator = {
@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
 		unique: true,
 		required: [true, 'Укажите email'],
 		trim: true,
-		lowercase: true, // TEST@MAIL.COM
+		lowercase: true, // TEST@MAIL.COM -> test@mail.com
 		validate: emailValidator
 	},
 	password_hash: { type: String, required: true },
@@ -29,32 +29,32 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.virtual('passwordConfirmation')
-	.set(function (v) {
+	.set(function(v) {
 		this._passwordConfirmation = v;
 	})
-	.get(function () {
+	.get(function() {
 		return this._passwordConfirmation;
 	});
 
 userSchema.virtual('password')
-	.set(function (password) {
+	.set(function(password) {
 		if (!password || !String(password).trim()) {
 			return this.invalidate('password', 'Пустой пароль');
 		}
 		this._password = password;
 		this.salt = crypto.randomBytes(256).toString('base64');
-		this.password_hash = crypto.pbkdf2Sync(password, this.salt, 100000, 512, 'sha512');
+		this.password_hash = crypto.pbkdf2Sync(password, this.salt, 500, 512, 'sha512');
 	})
-	.get(function () {
+	.get(function() {
 		return this._password;
 	});
 
-userSchema.methods.checkPassword = function (password) {
+userSchema.methods.checkPassword = function(password) {
 	if (!password || !String(password).trim() || !this.password_hash) return false;
-	return String( crypto.pbkdf2Sync(password, this.salt, 100000, 512, 'sha512') ) === this.password_hash;
+	return String( crypto.pbkdf2Sync(password, this.salt, 500, 512, 'sha512') ) === this.password_hash;
 }
 
-userSchema.virtual('full_name').get(function () {
+userSchema.virtual('full_name').get(function() {
 	return `${this.first_name} ${this.last_name}`;
 });
 

@@ -9,6 +9,7 @@ module.exports = {
 			dbName: 'nodejs',
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
+			useCreateIndex: true,
 		}
 	}
 };

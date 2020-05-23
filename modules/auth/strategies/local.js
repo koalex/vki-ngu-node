@@ -1,5 +1,5 @@
 const LocalStrategy = require('passport-local').Strategy;
-const User = require('../models/user');
+const User = require('../../users/models/user');
 
 module.exports = new LocalStrategy({
 	usernameField: 'email',
@@ -10,11 +10,12 @@ module.exports = new LocalStrategy({
 		if (err) {
 			return done(err);
 		}
-
+		if (!user) {
+			return done(null, false, 'Пользователь не найден');
+		}
 		if (!user.checkPassword(password)) {
 			return done(null, false, 'Неверный пароль');
 		}
-
 		return done(null, user);
 	});
 });
