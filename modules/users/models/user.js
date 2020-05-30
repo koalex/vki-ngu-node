@@ -10,6 +10,7 @@ const emailValidator = {
 };
 
 const userSchema = new mongoose.Schema({
+	active: { type: Boolean, default: false },
 	first_name: { type: String, required: [true, 'Укажите имя'], trim: true },
 	last_name: { type: String, required: [true, 'Укажите фамилию'], trim: true },
 	age: { type: Number, min: 18, max: 120 },
@@ -21,8 +22,10 @@ const userSchema = new mongoose.Schema({
 		lowercase: true, // TEST@MAIL.COM -> test@mail.com
 		validate: emailValidator
 	},
+	role: {},
 	password_hash: { type: String, required: true },
 	salt: { type: String, required: true },
+	email_validation_token: { type: String },
 }, {
 	id: false,
 	versionKey: false,
@@ -43,7 +46,7 @@ userSchema.virtual('password')
 		}
 		this._password = password;
 		this.salt = crypto.randomBytes(256).toString('base64');
-		this.password_hash = crypto.pbkdf2Sync(password, this.salt, 500, 512, 'sha512');
+		this.password_hash = crypto.pbkdf2Sync(password, this.salt, 100, 100, 'sha512');
 	})
 	.get(function() {
 		return this._password;
@@ -51,7 +54,7 @@ userSchema.virtual('password')
 
 userSchema.methods.checkPassword = function(password) {
 	if (!password || !String(password).trim() || !this.password_hash) return false;
-	return String( crypto.pbkdf2Sync(password, this.salt, 500, 512, 'sha512') ) === this.password_hash;
+	return String( crypto.pbkdf2Sync(password, this.salt, 100, 100, 'sha512') ) === this.password_hash;
 }
 
 userSchema.virtual('full_name').get(function() {

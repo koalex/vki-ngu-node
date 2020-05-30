@@ -30,5 +30,9 @@ module.exports = new JwtStrategy(opts, async function(req, jwtPayload, done) {
 		return done(null, false, 'Пользователь не найден');
 	}
 
+	if (!user.active) {
+		return done(null, false, 'Пользователь не активирован');
+	}
+
 	return done(null, user);
 });
