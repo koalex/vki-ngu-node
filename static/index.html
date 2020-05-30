@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>NODE.js</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js" integrity="sha256-Dul4c09cdrWKXVtallPxF558lwxMwCC8dXJdZ0PVW54=" crossorigin="anonymous"></script>
 </head>
-
+<script>
+	const socket = io('http://localhost:3000');
+</script>
 <body>
     <form action="/api/signup" method="POST" enctype="application/x-www-form-urlencoded">
         <input type="text" name="first_name" placeholder="ИМЯ ПОЛЬЗОВАТЕЛЯ">
@@ -52,11 +55,46 @@
 
     <hr>
 
+    <form action="/api/me" method="GET" enctype="application/x-www-form-urlencoded">
+        <button type="submit">GET USER INFO</button>
+    </form>
+
+    <hr>
+
     <form action="/api/contacts/foto" method="POST" enctype="multipart/form-data">
         <input type="text" name="fotodescription" placeholder="ОПИСАНИЕ КАРТИНКИ">
         <br>
         <input type="file" name="foto">
         <button type="submit">ЗАГРУЗИТЬ ФОТО</button>
     </form>
+    <hr>
+    <div>
+        <div style="display: flex; align-items: flex-start">
+            <form action="#!" id="sendMsgForm">
+                <textarea cols="30" rows="10" id="textArea"></textarea>
+                <button type="submit">ОТПРАВИТЬ</button>
+            </form>
+
+            <ul id="messagesList"></ul>
+        </div>
+        <script>
+	        sendMsgForm.addEventListener('submit', ev => {
+	        	ev.preventDefault();
+		        fetch('/api/chat', {
+		        	method: 'POST',
+                    headers: {
+		        		'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({message: textArea.value}),
+                });
+            });
+
+	        socket.on('connect', () => {
+		        socket.on('MESSAGE', message => {
+			        messagesList.insertAdjacentHTML('beforeend', `<li>${message}</li>`)
+		        });
+	        });
+        </script>
+    </div>
 </body>
 </html>

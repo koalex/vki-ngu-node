@@ -11,5 +11,9 @@ module.exports = {
 			useUnifiedTopology: true,
 			useCreateIndex: true,
 		}
+	},
+	redis: {
+		host: 'localhost',
+		port: 6379
 	}
 };

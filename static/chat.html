@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>NODE.js</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js" integrity="sha256-Dul4c09cdrWKXVtallPxF558lwxMwCC8dXJdZ0PVW54=" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</head>
+<script>
+	const socket = io('http://localhost:3000');
+</script>
+<body>
+    <div class="wrapper">
+        <header class="header container">
+            <form class="signup-form" hidden action="/api/signup" method="POST" enctype="application/x-www-form-urlencoded">
+                <input type="text" name="first_name" placeholder="ИМЯ ПОЛЬЗОВАТЕЛЯ">
+                <br>
+                <input type="text" name="last_name" placeholder="ФАМИЛИЯ ПОЛЬЗОВАТЕЛЯ">
+                <br>
+                <input type="text" name="age" placeholder="ВОЗРАСТ">
+                <br>
+                <input type="text" name="email" placeholder="EMAIL">
+                <br>
+                <input type="password" name="password" placeholder="ПАРОЛЬ">
+                <br>
+                <input type="password" name="passwordConfirmation" placeholder="ПОВТОРИТЕ ПАРОЛЬ">
+                <br>
+                <button type="submit">SIGNUP</button>
+            </form>
+
+            <form class="signin-form" hidden action="/api/signin" method="POST" enctype="application/x-www-form-urlencoded">
+                <input type="text" name="email" placeholder="EMAIL">
+                <br>
+                <input type="password" name="password" placeholder="ПАРОЛЬ">
+                <br>
+                <button type="submit">Войти</button>
+            </form>
+
+            <form class="signout-form" hidden action="/api/signout" method="POST" enctype="application/x-www-form-urlencoded">
+                <button type="submit">Выйти</button>
+            </form>
+        </header>
+
+        <main class="main">
+            <div class="chats">
+                <div class="new-chat container">
+                    <form class="new-chat-form" action="/api/chats" method="POST" enctype="application/x-www-form-urlencoded">
+                        <label>
+                            имя чата:
+                            <input type="text" name="chat">
+                        </label>
+                        <button type="submit">Создать чат</button>
+                    </form>
+                </div>
+
+                <ul class="chats-list">
+                    <li class="chats-list__item container">
+                        Чат 1
+                    </li>
+                    <li class="chats-list__item container">
+                        Чат 2
+                    </li>
+                    <li class="chats-list__item container">
+                        Чат 3
+                    </li>
+                </ul>
+            </div>
+            <div class="chat container">
+                <ul class="messages-list container">
+                    <li class="messages-list__item self container">
+                        Моё сообщение
+                    </li>
+
+                    <li class="messages-list__item container">
+                        Сообщение от другого пользователя
+                    </li>
+                </ul>
+
+                <form class="chat-form" action="/api/chats/messages" method="POST" enctype="application/x-www-form-urlencoded">
+                    <textarea name="message"></textarea>
+                    <button class="container" type="submit">Отправить</button>
+                </form>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

@@ -30,12 +30,15 @@ app.use(require('./middlewares/log'));
 app.use(require('./middlewares/error'));
 app.use(require('./middlewares/static'));
 
+const server = http.createServer(app.callback());
+const io = require('./lib/socket.js')(server);
 
 // MODULES
 require('./modules/auth')(app);
 require('./modules/users')(app);
+require('./modules/chat')(app);
 
-const server = http.createServer(app.callback());
+
 server.listen(config.port, () => {
 	console.log('СЕРВЕР СЛУШАЕТ ПОРТ:', config.port);
 });
