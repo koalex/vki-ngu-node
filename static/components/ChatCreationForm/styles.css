@@ -1,0 +1,12 @@
+.new-chat-form button {
+    display: block;
+    margin-top: 8px;
+    width: 100%;
+}
+@media screen and (min-width: 600px){
+    .new-chat-form button {
+        display: inline-block;
+        margin-top: 0;
+        width: auto;
+    }
+}

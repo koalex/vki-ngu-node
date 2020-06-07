@@ -1,0 +1,10 @@
+.signin-form {
+    display: flex;
+    align-items: center;
+}
+.signin-form input {
+    width: 100px;
+}
+.signin-form > * + * {
+    margin-left: 8px;
+}

@@ -1,3 +1,6 @@
+*[hidden] {
+    display: none !important;
+}
 html, body {
     margin: 0;
     min-height: 100%;
@@ -11,77 +14,42 @@ ul, li {
 .container {
     padding: 8px 12px;
 }
+
 .header {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
+    height: 60px;
     color: #fff;
     background-color: #29487d;
+    box-sizing: border-box;
 }
-.signin-form {
-    display: flex;
-    align-items: center;
-}
+
 .main {
     display: flex;
-    min-height: calc(100vh - 57px);
+    height: calc(100vh - 60px);
 }
 .chats {
+    display: flex;
+    flex-direction: column;
     border-right: 2px solid #29487d;
+    width: 200px;
 }
 .new-chat {
+    display: flex;
+    align-items: center;
     border-bottom: 2px solid #29487d;
 }
-.chats-list__item {
-    border-bottom: 1px solid #29487d;
-}
+
 .chat {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
 }
-.messages-list {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    border: 2px solid #29487d;
-    border-radius: 4px;
-}
-.messages-list__item {
-    font-size: 12px;
-    color: #fff;
-    background: #29487d;
-    border-radius: 4px;
+@media screen and (min-width: 600px){
+    .chats {
+        width: 300px;
+    }
 }
 
-.messages-list__item.self {
-    align-self: flex-end;
-    background-color: #69a74e;
-}
-
-.new-chat-form {
-    height: 40px;
-}
-
-.chat-form {
-    display: flex;
-    flex-direction: column;
-    margin-top: 12px;
-}
-.chat-form textarea {
-    resize: none;
-    min-height: 80px;
-    font-size: 16px;
-    border: 2px solid #29487d;
-    border-radius: 4px;
-}
-.chat-form button {
-    align-self: flex-end;
-    margin-top: 12px;
-    font-size: 16px;
-    color: #ffffff;
-    background-color: #29487d;
-    border-radius: 4px;
-    cursor: pointer;
-}
 

@@ -1,0 +1,10 @@
+.signup-form {
+    background-color: #29487d;
+    border-radius: 4px;
+}
+.signup-form .input-container + .input-container {
+    margin-top: 8px;
+}
+.signup-form button {
+    width: 100%;
+}

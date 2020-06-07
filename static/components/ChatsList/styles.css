@@ -1,0 +1,19 @@
+.chats-list {
+    overflow-y: auto;
+}
+.chats-list__item {
+    opacity: .7;
+    border-bottom: 1px solid #29487d;
+    cursor: pointer;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.chats-list__item.selected {
+    font-weight: bold;
+    opacity: 1;
+    /*cursor: default;*/
+}
+.chats-list__item:not(.selected):hover {
+    opacity: 1;
+}
