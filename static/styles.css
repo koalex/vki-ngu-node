@@ -17,14 +17,17 @@ ul, li {
 
 .header {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     height: 60px;
     color: #fff;
     background-color: #29487d;
     box-sizing: border-box;
 }
-
+.auth {
+    display: flex;
+    align-items: center;
+}
 .main {
     display: flex;
     height: calc(100vh - 60px);

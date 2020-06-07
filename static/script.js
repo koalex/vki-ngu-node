@@ -10,11 +10,11 @@ import SendMessageForm  from './components/SendMessageForm/index.js';
 import {loadUser}       from './auth.js';
 import fixtures         from './fixtures.js';
 
-const signupBtn = new SignupBtn({container: 'header'});
+const signupBtn = new SignupBtn({container: '.auth'});
 const signupForm = new SignupForm();
 const modal = new Modal({content: signupForm.render()});
-const signinForm = new SigninForm({container: 'header'});
-const signoutForm = new SignoutForm({container: 'header'});
+const signinForm = new SigninForm({container: '.auth'});
+const signoutForm = new SignoutForm({container: '.auth'});
 const chatCreationForm = new ChatCreationForm({container: '.new-chat'});
 const chatsList = new ChatsList({container: '.chats'});
 const chatMessages = new ChatMessages({container: '.chat', renderPosition: 'afterbegin', loading: true});
