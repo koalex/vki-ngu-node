@@ -7,7 +7,8 @@
     "start": "cross-env NODE_ENV=production node server.js",
     "dev": "cross-env NODE_ENV=development nodemon server.js",
     "test": "cross-env NODE_ENV=test mocha \"./test/*.js\" --recursive --exit",
-    "test:smoke": "cross-env NODE_ENV=test mocha \"./test/smoke.js\" --recursive --exit"
+    "test:smoke": "cross-env NODE_ENV=test mocha \"./test/smoke.js\" --recursive --exit",
+    "commit": "./node_modules/cz-customizable/standalone.js"
   },
   "husky": {
     "hooks": {
@@ -43,6 +44,8 @@
     "socket.io-redis": "^5.2.0"
   },
   "devDependencies": {
+    "commitizen": "^4.1.2",
+    "cz-customizable": "^6.2.0",
     "husky": "^4.2.5",
     "mocha": "^8.0.1",
     "nodemon": "^2.0.3",
