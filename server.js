@@ -38,7 +38,12 @@ require('./modules/auth')(app);
 require('./modules/users')(app);
 require('./modules/chat')(app);
 
+if (!module.parent) {
+	server.listen(config.port, () => {
+		console.log('СЕРВЕР СЛУШАЕТ ПОРТ:', config.port);
+	});
+}
 
-server.listen(config.port, () => {
-	console.log('СЕРВЕР СЛУШАЕТ ПОРТ:', config.port);
-});
+module.exports = server;
+
+
