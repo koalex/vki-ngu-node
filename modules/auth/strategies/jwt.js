@@ -19,7 +19,7 @@ module.exports = new JwtStrategy(opts, async function(req, jwtPayload, done) {
 	const userId = jwtPayload._id;
 
 	if (denied) {
-		return done(null, false, 'Токен в чёрном списке');
+		return done(null, false, {message: 'Токен в чёрном списке', /*type*/});
 	}
 
 	// VERIFY
@@ -27,11 +27,11 @@ module.exports = new JwtStrategy(opts, async function(req, jwtPayload, done) {
 	const user = await User.findOne({_id: userId});
 
 	if (!user) {
-		return done(null, false, 'Пользователь не найден');
+		return done(null, false, {message: 'Пользователь не найден', /*type*/});
 	}
 
 	if (!user.active) {
-		return done(null, false, 'Пользователь не активирован');
+		return done(null, false, {message: 'Пользователь не активирован', /*type*/});
 	}
 
 	return done(null, user);

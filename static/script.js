@@ -7,7 +7,9 @@ import ChatCreationForm from './components/ChatCreationForm/index.js';
 import ChatsList        from './components/ChatsList/index.js';
 import ChatMessages     from './components/ChatMessages/index.js';
 import SendMessageForm  from './components/SendMessageForm/index.js';
-import {loadUser}       from './auth.js';
+import {
+	loadUser, signup, signin, signout
+} from './auth.js';
 import fixtures         from './fixtures.js';
 
 const signupBtn = new SignupBtn({container: '.auth'});
@@ -39,6 +41,26 @@ signoutForm.hidden = true;
 
 init();
 
+signupForm.addEventListener('submit', signup);
+signinForm.addEventListener('submit', async ev => {
+	const success = await signin(ev);
+	if (success) {
+		signinForm.hidden = true;
+		signupBtn.hidden = true;
+		signoutForm.hidden = false;
+		signupBtn.hidden = true;
+	}
+});
+signoutForm.addEventListener('submit', async ev => {
+	const success = await signout(ev);
+	if (success) {
+		signinForm.hidden = false;
+		signupBtn.hidden = false;
+		signoutForm.hidden = true;
+		await loadUser();
+	}
+});
+
 async function init() {
 	const user = await loadUser();
 
@@ -47,6 +69,7 @@ async function init() {
 		signupBtn.hidden = false;
 	} else {
 		signoutForm.hidden = false;
+		signupBtn.hidden = true;
 	}
 
 }

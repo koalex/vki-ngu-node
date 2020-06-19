@@ -14,23 +14,24 @@ apiRouter
 		const userData = ctx.request.body;
 		const newUser = new User(userData);
 		newUser.active = false;
-		newUser.email_validation_token = 'uuid' + Math.random();
+		newUser.email_validation_token = ('uuid' + Math.random()).replace('.', '');
 		await newUser.save();
 		// Отпаврляем письмо на email с токеном email_validation_token
 		/*
 		* Для подтверждения email-а перейдите по ссылке http://localhost:3000/api/email-confirm/email_validation_token
 		* */
-		ctx.status = 200;
+		ctx.body = newUser.email_validation_token;
 	})
-	.get('/api/email-confirm/:token', async ctx => {
+	.get('/email-confirm/:token', async ctx => {
 		const emailToken = ctx.params.token;
-		const user = await User.findOne({email_validation_token: emailToken});
+		const user = await User.findOne({active:false, email_validation_token: emailToken});
 		if (!user) {
 			return ctx.throw(404);
 		}
 		user.active = true;
+		user.email_validation_token = undefined;
 		await user.save();
-		ctx.status = 200;
+		ctx.body = 'Пользователь успешно активирован!';
 	})
 	.post('/signin', bodyParser, passport.authenticate('local', {session: false}), async ctx => {
 		const tokens = tokensCtrl.createTokens(ctx.state.user);
@@ -38,7 +39,12 @@ apiRouter
 		ctx.status = 200;
 	})
 	.post('/signout', bodyParser, passport.authenticate('jwt', {session: false}), async ctx => {
-		// TODO: сделать деавторизацию
+		tokensCtrl.clearTokensCookies(ctx);
+		ctx.status = 200;
+	})
+	.get('/signout', bodyParser, passport.authenticate('jwt', {session: false}), async ctx => {
+		tokensCtrl.clearTokensCookies(ctx);
+		ctx.status = 200;
 	})
 	.get('/check-jwt-auth', bodyParser, passport.authenticate('jwt', {session: false}), async ctx => {
 		ctx.body = 'ДОСТУП РАЗРЕШЁН';

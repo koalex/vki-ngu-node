@@ -11,10 +11,10 @@ module.exports = new LocalStrategy({
 			return done(err);
 		}
 		if (!user) {
-			return done(null, false, 'Пользователь не найден');
+			return done(null, false, {message: 'Пользователь не найден'});
 		}
 		if (!user.checkPassword(password)) {
-			return done(null, false, 'Неверный пароль');
+			return done(null, false, {message: 'Неверный пароль'});
 		}
 		return done(null, user);
 	});

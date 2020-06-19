@@ -80,6 +80,14 @@ async function refreshTokens(ctx) {
 	ctx.body = tokens;
 }
 
+function clearTokensCookies (ctx) {
+	ctx.cookies.set('x-access-token', null);
+	ctx.cookies.set('x-refresh-token', null);
+	ctx.cookies.set('x-access-token.sig', null);
+	ctx.cookies.set('x-refresh-token.sig', null);
+}
+
 exports.refreshTokens = refreshTokens;
 exports.createTokens = createTokens;
 exports.setTokensCookies = setTokensCookies;
+exports.clearTokensCookies = clearTokensCookies;

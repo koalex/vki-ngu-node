@@ -31,18 +31,15 @@ const userSchema = new mongoose.Schema({
 	versionKey: false,
 });
 
-userSchema.virtual('passwordConfirmation')
-	.set(function(v) {
-		this._passwordConfirmation = v;
-	})
-	.get(function() {
-		return this._passwordConfirmation;
-	});
-
 userSchema.virtual('password')
 	.set(function(password) {
 		if (!password || !String(password).trim()) {
-			return this.invalidate('password', 'Пустой пароль');
+			this.invalidate('password', 'Пустой пароль');
+			return;
+		}
+		if (String(password).trim().length < 5) {
+			this.invalidate('password', 'Пароль должен содержать минимум 3 символа');
+			return;
 		}
 		this._password = password;
 		this.salt = crypto.randomBytes(256).toString('base64');
@@ -65,6 +62,7 @@ userSchema.methods.toJSON = function(opts) {
 	const user = this.toObject(opts);
 	delete user.salt;
 	delete user.password_hash;
+	delete user.email_validation_token;
 	return user;
 }
 

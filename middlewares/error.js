@@ -11,6 +11,9 @@ module.exports = async (ctx, next) => {
 			return ctx.body = 'Ошибка сервера';
 		}
 
+		if (err.name === 'CastError' || 'ValidationError' === err.name) {
+			ctx.status = 400;
+		}
 
 		if (err.errors) {
 			const errMessage = [];
@@ -18,7 +21,7 @@ module.exports = async (ctx, next) => {
 				errMessage.push({
 					field,
 					message: err.errors[field].message,
-				})
+				});
 			}
 			ctx.body = errMessage;
 		} else {

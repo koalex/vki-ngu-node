@@ -1,4 +1,4 @@
-export async function loadUser() {
+export async function createChat(ev) {
 	const response = await fetch('/api/me');
 
 	if (response.ok) {

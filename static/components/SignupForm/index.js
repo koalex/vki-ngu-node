@@ -7,7 +7,6 @@ const lastName = new Input({name: 'last_name', placeholder: 'Фамилия'});
 const age = new Input({name: 'age', placeholder: 'Возраст'});
 const email = new Input({name: 'email', placeholder: 'Email'});
 const password = new Input({type: 'password', name: 'password', placeholder: 'Пароль'});
-const password2 = new Input({type: 'password', name: 'passwordConfirmation', placeholder: 'Повторите пароль'});
 const button = new Button({type: 'submit', content: 'Зарегистрироваться'});
 
 class SignupForm extends Form{
@@ -31,9 +30,6 @@ class SignupForm extends Form{
             </div>
             <div class="input-container">
             	${password.render().outerHTML}
-            </div>
-            <div class="input-container">
-            	${password2.render().outerHTML}
             </div>
             <div class="input-container">
             	${button.render().outerHTML}
