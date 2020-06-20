@@ -4,7 +4,7 @@ const User  = require('../../users/models/user');
 const BlackToken = require('../models/blackTokens');
 
 function createTokens(user/*, opts*/) {
-	const accessTokenExpiresIn = 60 * 30; // 30min
+	const accessTokenExpiresIn = 60 * 0.2;//30; // 30min
 	const refreshTokenExpiresIn = 86400 * 60; // 60 days
 
 	const access_token = jwt.sign({_id: user._id}, config.secret, {
@@ -44,10 +44,10 @@ function setTokensCookies(ctx, tokens) {
 }
 
 async function refreshTokens(ctx) {
-	const accessToken = ctx.headers['x-access-token'] || ctx.query.access_token || ctx.cookies.get('x-access-token') || ctx.request.body && ctx.request.body.access_token;
+	// const accessToken = ctx.headers['x-access-token'] || ctx.query.access_token || ctx.cookies.get('x-access-token') || ctx.request.body && ctx.request.body.access_token;
 	const refreshToken = ctx.headers['x-refresh-token'] || ctx.query.refresh_token || ctx.cookies.get('x-refresh-token') || ctx.request.body && ctx.request.body.refresh_token;
 
-	if (!refreshToken || !accessToken) {
+	if (!refreshToken/* || !accessToken*/) {
 		return ctx.throw(401, 'Отсутствует токен');
 	}
 	// VERIFY....
@@ -61,7 +61,7 @@ async function refreshTokens(ctx) {
 		return ctx.throw(500, 'Невалидный токен');
 	}
 
-	await Promise.all([accessToken, refreshToken].map(token => {
+	await Promise.all([/*accessToken,*/ refreshToken].map(token => {
 		const verifyOpts = {
 			algorithms: ['HS512'],
 			ignoreExpiration: true,

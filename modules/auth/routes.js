@@ -36,7 +36,7 @@ apiRouter
 	.post('/signin', bodyParser, passport.authenticate('local', {session: false}), async ctx => {
 		const tokens = tokensCtrl.createTokens(ctx.state.user);
 		await tokensCtrl.setTokensCookies(ctx, tokens);
-		ctx.status = 200;
+		ctx.body = tokens;
 	})
 	.post('/signout', bodyParser, passport.authenticate('jwt', {session: false}), async ctx => {
 		tokensCtrl.clearTokensCookies(ctx);

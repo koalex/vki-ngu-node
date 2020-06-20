@@ -1,5 +1,7 @@
+import request from './request.js';
+
 export async function loadUser() {
-	const response = await fetch('/api/me');
+	const response = await request('/api/me');
 
 	if (response.ok) {
 		const user = await response.json();
@@ -13,10 +15,14 @@ export async function loadUser() {
 export async function refreshTokens() { // TODO
 	const response = await fetch('/api/refresh-tokens');
 
-	if (!response.ok) {
-		localStorage.removeItem('user');
+	if (response.ok) {
+		const tokens = await response.json();
+		const {access_token_expires, refresh_token_expires} = tokens;
+		localStorage.setItem('access_token_expires', access_token_expires);
+		localStorage.setItem('refresh_token_expires', refresh_token_expires);
 	} else {
-		return true;
+		localStorage.removeItem('access_token_expires');
+		localStorage.removeItem('refresh_token_expires');
 	}
 }
 
@@ -27,7 +33,7 @@ export async function signin(ev) {
 		return acc;
 	}, {});
 
-	const response = await fetch('/api/signin', {
+	const response = await request('/api/signin', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -36,6 +42,11 @@ export async function signin(ev) {
 	});
 
 	if (response.ok) {
+		const tokens = await response.json();
+		const {access_token_expires, refresh_token_expires} = tokens;
+		localStorage.setItem('access_token_expires', access_token_expires);
+		localStorage.setItem('refresh_token_expires', refresh_token_expires);
+
 		await loadUser();
 		return true;
 	} else {
@@ -50,7 +61,7 @@ export async function signup(ev) {
 		return acc;
 	}, {});
 
-	const response = await fetch('/api/signup', {
+	const response = await request('/api/signup', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -67,10 +78,9 @@ export async function signup(ev) {
 }
 
 export async function signout() {
-	const response = await fetch('/api/signout');
+	const response = await request('/api/signout');
 	if (response.ok) {
-		localStorage.setItem('user', null);
+		localStorage.removeItem('user');
 		return true;
 	}
 }
-
