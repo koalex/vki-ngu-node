@@ -8,7 +8,9 @@
     "dev": "cross-env NODE_ENV=development nodemon server.js",
     "test": "cross-env NODE_ENV=test mocha \"./test/*.js\" --recursive --exit",
     "test:smoke": "cross-env NODE_ENV=test mocha \"./test/smoke.js\" --recursive --exit",
-    "commit": "./node_modules/cz-customizable/standalone.js"
+    "commit": "./node_modules/cz-customizable/standalone.js",
+    "deploy:setup": "pm2 deploy pm2/ecosystem.config.js production setup",
+    "deploy": "pm2 deploy pm2/ecosystem.config.js production"
   },
   "husky": {
     "hooks": {
