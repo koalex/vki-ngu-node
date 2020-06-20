@@ -47,7 +47,7 @@ module.exports = {
             // SSH user
             user: 'admin',
             // SSH host
-            host: ['89.223.123.177'],
+            host: ['109.68.213.78'],
             // SSH options with no command-line flag, see 'man ssh'
             // can be either a single string or an array of strings
             ssh_options: ['StrictHostKeyChecking=no'/*, 'PasswordAuthentication=no'*/],
